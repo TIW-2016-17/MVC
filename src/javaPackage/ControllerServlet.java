@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.html")
 public class ControllerServlet extends HttpServlet {
+	private static final String SHOW_INFO_JSP = "showInfo.jsp";
+	private static final String ATTRIBUTE_DATA_MODEL_BEAN = "dataModelBean";
 	private static final String SORRY_NOT_FOUND_JSP = "sorryNotFound.jsp";
 	private static final String ENTER_NAME_JSP = "enterName.jsp";
 	private static final String NAME = "name";
@@ -75,16 +77,21 @@ public class ControllerServlet extends HttpServlet {
 				if (beanUser == null) {
 					viewURL = SORRY_NOT_FOUND_JSP;
 				}
+				else {
+					// COMPLETE 7.- if data found:
+					// - Load the object databean obtain as an attribute "dataModelBean" of
+					// the request
+					// - redirect to "showInfo.jsp"
+					request.setAttribute(ATTRIBUTE_DATA_MODEL_BEAN, beanUser);
+                	viewURL = SHOW_INFO_JSP;
+				}
 			}
 			if (viewURL != null)
 				request.getRequestDispatcher(viewURL).forward(request, response);
 
 		}
 
-		// COMPLETE 7.- if data found:
-		// - Load the object databean obtain as an attribute "dataModelBean" of
-		// the request
-		// - redirect to "showInfo.jsp"
+		
 
 	}
 }
