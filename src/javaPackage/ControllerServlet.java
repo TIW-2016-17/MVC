@@ -31,7 +31,10 @@ public class ControllerServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		// COMPLETE 1.- Obtain the path of the request
+		String sReq;
 		
+	    sReq = request.getServletPath();
+	    System.out,println("request: "+sReq);
 		
 	    // If the path is null show error message
 	    //if (sReq == null) {
