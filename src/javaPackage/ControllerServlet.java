@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.html")
 public class ControllerServlet extends HttpServlet {
+	private static final String ENTER_NAME_JSP = "enterName.jsp";
 	private static final String NAME = "name";
 	private static final String URL_LOGIN_HTML = "/login.html";
 	private static final String URL_SHOW_INFO = "/showInfo.html";
@@ -53,14 +54,19 @@ public class ControllerServlet extends HttpServlet {
 	    		default: response.sendError(HttpServletResponse.SC_NOT_FOUND);
 	    	}*/
 	    	if (sReq.equals(URL_SHOW_INFO) || sReq.equals(URL_LOGIN_HTML))	{
-    	        String name;
+    	        String viewURL;
+	    		String name;
     			// COMPLETE 3.- Obtain the value of the name send in the request
     	        name = request.getParameter(NAME);
     	        System.out.println("Parameter "+NAME+"= ");
+    	        
+    			// COMPLETE 4.- If the name is NULL we should redirect to the view  "entername.jsp"
+    	        if (name == null) {
+    	        	viewURL = ENTER_NAME_JSP;
+    	 	        request.getRequestDispatcher(viewURL).forward(request, response);
+    	        }
 	    	}
-		// COMPLETE 2.- Check if the path is  "/showInfo.html" or "/login.html"
 
-		// COMPLETE 4.- If the name is NULL we should redirect to the view  "entername.jsp"
 
 	 	
 		  // COMPLETE 5.- If it is nt null:
