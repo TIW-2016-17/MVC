@@ -33,52 +33,53 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		// COMPLETE 1.- Obtain the path of the request
 		String sReq;
-		
-	    sReq = request.getServletPath();
-	    System.out.println("request: "+sReq);
-		
-	    // If the path is null show error message
-	    if (sReq == null) {
-	      response.sendError(HttpServletResponse.SC_NOT_FOUND);
-	    }
-	    else
-		// COMPLETE 2.- Check if the path is  "/showInfo.html" or "/login.html"
-	    	/*switch(sReq){
-	    		case URL_SHOW_INFO :System.out.println(URL_SHOW_INFO);
-	    		break;
-	    		case URL_LOGIN_HTML: System.out.println(URL_LOGIN_HTML);
-	    		break;
-	    		default: response.sendError(HttpServletResponse.SC_NOT_FOUND);
-	    	}*/
-	    	if (sReq.equals(URL_SHOW_INFO) || sReq.equals(URL_LOGIN_HTML))	{
-    	        String viewURL;
-	    		String name;
-    			// COMPLETE 3.- Obtain the value of the name send in the request
-    	        name = request.getParameter(NAME);
-    	        System.out.println("Parameter "+NAME+"= ");
-    	        
-    			// COMPLETE 4.- If the name is NULL we should redirect to the view  "entername.jsp"
-    	        if (name == null) {
-    	        	viewURL = ENTER_NAME_JSP;
-    	 	        request.getRequestDispatcher(viewURL).forward(request, response);
-    	        }
-	    	}
 
+		sReq = request.getServletPath();
+		System.out.println("request: " + sReq);
 
-	 	
-		  // COMPLETE 5.- If it is nt null:
-		  //				-  crearte a DataStore object
-		  //				-  call its method getInfo sending the name received as a parameter
+		// If the path is null show error message
+		if (sReq == null) {
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		} else
+		// COMPLETE 2.- Check if the path is "/showInfo.html" or "/login.html"
+		/*
+		 * switch(sReq){ case URL_SHOW_INFO :System.out.println(URL_SHOW_INFO);
+		 * break; case URL_LOGIN_HTML: System.out.println(URL_LOGIN_HTML);
+		 * break; default: response.sendError(HttpServletResponse.SC_NOT_FOUND);
+		 * }
+		 */
+		if (sReq.equals(URL_SHOW_INFO) || sReq.equals(URL_LOGIN_HTML)) {
+			String viewURL;
+			String name;
+			// COMPLETE 3.- Obtain the value of the name send in the request
+			name = request.getParameter(NAME);
+			System.out.println("Parameter " + NAME + "= ");
 
+			// COMPLETE 4.- If the name is NULL we should redirect to the view
+			// "entername.jsp"
+			if (name == null) {
+				viewURL = ENTER_NAME_JSP;
+				request.getRequestDispatcher(viewURL).forward(request, response);
+			} else {
+				// COMPLETE 5.- If it is nt null:
+				// - crearte a DataStore object
+				// - call its method getInfo sending the name received as a
+				// parameter
+				DataStore almacen = new DataStore();
+				DataModelBean beanUser = almacen.getInfo(name);
+			}
+		}
 
-		  // COMPLETE 6.- If no data has been found we should redirect to "sorryNotFound.jsp"
+		// COMPLETE 6.- If no data has been found we should redirect to
+		// "sorryNotFound.jsp"
 
-				// COMPLETE 7.- if data found:
-				//			- Load the object databean obtain as an attribute "dataModelBean" of the request
-				//			- redirect to "showInfo.jsp"
-	    
+		// COMPLETE 7.- if data found:
+		// - Load the object databean obtain as an attribute "dataModelBean" of
+		// the request
+		// - redirect to "showInfo.jsp"
+
 	}
 }
