@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.html")
 public class ControllerServlet extends HttpServlet {
+	private static final String URL_LOGIN_HTML = "/login.html";
+	private static final String URL_SHOW_INFO = "/showInfo.html";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -34,14 +36,22 @@ public class ControllerServlet extends HttpServlet {
 		String sReq;
 		
 	    sReq = request.getServletPath();
-	    System.out,println("request: "+sReq);
+	    System.out.println("request: "+sReq);
 		
 	    // If the path is null show error message
-	    //if (sReq == null) {
-	    //  response.sendError(HttpServletResponse.SC_NOT_FOUND);
-	    //} else 
+	    if (sReq == null) {
+	      response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    }
+	    else
 		// COMPLETE 2.- Check if the path is  "/showInfo.html" or "/login.html"
-
+	    	switch(sReq){
+	    		case URL_SHOW_INFO :System.out.println(URL_SHOW_INFO);
+	    		break;
+	    		case URL_LOGIN_HTML: System.out.println(URL_LOGIN_HTML);
+	    		break;
+	    		default: response.sendError(HttpServletResponse.SC_NOT_FOUND);
+	    	}
+	    		
 		// COMPLETE 3.- Obtain the value of the name send in the request
 
 		// COMPLETE 4.- If the name is NULL we should redirect to the view  "entername.jsp"
@@ -57,5 +67,6 @@ public class ControllerServlet extends HttpServlet {
 				// COMPLETE 7.- if data found:
 				//			- Load the object databean obtain as an attribute "dataModelBean" of the request
 				//			- redirect to "showInfo.jsp"
+	    
 	}
 }
