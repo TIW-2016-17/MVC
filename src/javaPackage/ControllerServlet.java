@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("*.html")
 public class ControllerServlet extends HttpServlet {
+	private static final String SORRY_NOT_FOUND_JSP = "sorryNotFound.jsp";
 	private static final String ENTER_NAME_JSP = "enterName.jsp";
 	private static final String NAME = "name";
 	private static final String URL_LOGIN_HTML = "/login.html";
@@ -52,7 +53,7 @@ public class ControllerServlet extends HttpServlet {
 		 * }
 		 */
 		if (sReq.equals(URL_SHOW_INFO) || sReq.equals(URL_LOGIN_HTML)) {
-			String viewURL;
+			String viewURL = null;
 			String name;
 			// COMPLETE 3.- Obtain the value of the name send in the request
 			name = request.getParameter(NAME);
@@ -62,19 +63,23 @@ public class ControllerServlet extends HttpServlet {
 			// "entername.jsp"
 			if (name == null) {
 				viewURL = ENTER_NAME_JSP;
-				request.getRequestDispatcher(viewURL).forward(request, response);
 			} else {
 				// COMPLETE 5.- If it is nt null:
-				// - crearte a DataStore object
+				// - create a DataStore object
 				// - call its method getInfo sending the name received as a
 				// parameter
 				DataStore almacen = new DataStore();
 				DataModelBean beanUser = almacen.getInfo(name);
-			}
-		}
 
-		// COMPLETE 6.- If no data has been found we should redirect to
-		// "sorryNotFound.jsp"
+				// COMPLETE 6.- If no data has been found we should redirect to "sorryNotFound.jsp"
+				if (beanUser == null) {
+					viewURL = SORRY_NOT_FOUND_JSP;
+				}
+			}
+			if (viewURL != null)
+				request.getRequestDispatcher(viewURL).forward(request, response);
+
+		}
 
 		// COMPLETE 7.- if data found:
 		// - Load the object databean obtain as an attribute "dataModelBean" of
